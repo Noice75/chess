@@ -72,7 +72,6 @@ def start():
     stop = False
     driver.maximize_window()
     driver.get('https://www.chess.com/play/online/new')
-    time.sleep(10)
     WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.XPATH, '//button[@class="ui_v5-button-component ui_v5-button-primary ui_v5-button-large ui_v5-button-full"]')))[0].click() #play
     while True:
         try:
@@ -112,11 +111,7 @@ def move(moveFrom,moveTo):
                 WebDriverWait(driver,5).until(EC.presence_of_all_elements_located((By.XPATH, f'//div[@class="promotion-piece bq"]')))[-1].click()
             else:
                 WebDriverWait(driver,5).until(EC.presence_of_all_elements_located((By.XPATH, f'//div[@class="promotion-piece wq"]')))[-1].click()
-        # for i in y:
-        #     print(i.get_attribute("class").split())
-        #     if("piece" in i.get_attribute("class").split()):
-        #         i.click()
-        #         break
+
         x = WebDriverWait(driver,5).until(EC.presence_of_all_elements_located((By.XPATH, f'//div[contains(@class,"hint square-{moveTo}")]')))
         for i in x:
             print(i.get_attribute("class"), f'square-{moveTo}' in i.get_attribute("class"))
