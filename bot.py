@@ -2,12 +2,8 @@ import undetected_chromedriver.v2 as uc
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
-from selenium.webdriver import ActionChains
-import json
-import time
 
 chrome_options = uc.ChromeOptions()
 chrome_options.add_argument("--headless")
@@ -45,9 +41,8 @@ def gameStart(color):
     WebDriverWait(driver,100).until(EC.presence_of_all_elements_located((By.XPATH, '//button[@class="ui_v5-button-component ui_v5-button-primary ui_v5-button-large ui_v5-button-full"]')))[-1].click() #play
 gameStart('white')
 def owo():
-    hi = WebDriverWait(driver,100).until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class,"highlight square-")]')))
     a = []
-    for i in hi:
+    for i in WebDriverWait(driver,100).until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class,"highlight square-")]'))):
         a.append(i.get_attribute("class").split("-")[-1])
     if(len(WebDriverWait(driver,1).until(EC.presence_of_all_elements_located((By.XPATH, f'//div[contains(@class,"square-{a[0]}")]')))) > 1):
         movedFrom = a[1]
@@ -66,11 +61,7 @@ def move(moveFrom,moveTo):
             WebDriverWait(driver,5).until(EC.presence_of_all_elements_located((By.XPATH, f'//div[@class="promotion-piece bq"]')))[-1].click()
         else:
             WebDriverWait(driver,5).until(EC.presence_of_all_elements_located((By.XPATH, f'//div[@class="promotion-piece wq"]')))[-1].click()
-    # for i in y:
-    #     print(i.get_attribute("class").split())
-    #     if("piece" in i.get_attribute("class").split()):
-    #         i.click()
-    #         break
+
     x = WebDriverWait(driver,5).until(EC.presence_of_all_elements_located((By.XPATH, f'//div[contains(@class,"hint square-{moveTo}")]')))
     for i in x:
         print(i.get_attribute("class"), f'square-{moveTo}' in i.get_attribute("class"))
@@ -101,5 +92,4 @@ def reset():
 
 
 if(__name__ == '__main__'):
-    start('white')
-    time.sleep(1000)
+    pass
